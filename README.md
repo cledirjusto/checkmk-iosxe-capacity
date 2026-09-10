@@ -102,3 +102,7 @@ cmk_addons/plugins/iosxe_capacity/
   graphing/iosxe_port_capacity.py      metrics, graph, perf-o-meter
 tests/                                 runs anywhere
 ```
+
+## License
+
+GPL-2.0. See [LICENSE](LICENSE).
