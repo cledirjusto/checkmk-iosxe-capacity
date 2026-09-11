@@ -3,20 +3,22 @@
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](LICENSE)
 ![Checkmk 2.3+](https://img.shields.io/badge/Checkmk-2.3%2B-green)
 
-A Checkmk check plug-in that answers one question about a Catalyst switch
-running IOS-XE: **how many physical ports are left, and of which kind.**
+A Checkmk check plug-in that counts the free physical ports of a Catalyst
+switch or stack running IOS-XE, per stack member and per cage type.
 
-It needs nothing you do not already have. No agent plug-in, no MRPE entry, no
-SSH, no credential, no scheduled job. If the switch is already monitored over
-SNMP, install the package and run a service discovery.
+It reads three standard SNMP tables over the session Checkmk already has with
+the switch: `ifTable` and `ifXTable` from the IF-MIB, and `entPhysicalTable`
+from the ENTITY-MIB. It adds no agent plug-in, no MRPE entry and no credential
+of its own, and writes nothing to the device. Installing the package and running
+a service discovery is the full procedure.
 
-Checkmk's own interface checks tell you how each port is doing. This tells you
-how much room is left in the chassis, which is a capacity question, not a fault
-question, and it is the one asked before a new rack goes in.
+This is capacity, not fault state. Checkmk's interface checks already report the
+status of each port. These services report how many positions of each kind
+remain in the chassis.
 
-Verified against **Catalyst 9000 stacks on IOS-XE**, including a three-member
-stack whose members are different models, and an eight-cage uplink module.
-Written against the plug-in APIs that are identical on 2.3, 2.4 and 2.5.
+Verified against Catalyst 9000 stacks on IOS-XE, including a three-member stack
+whose members are different models, and an eight-cage uplink module. Uses only
+plug-in APIs that are identical on 2.3, 2.4 and 2.5.
 
 ## Services
 
