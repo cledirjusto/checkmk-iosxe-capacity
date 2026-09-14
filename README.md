@@ -60,9 +60,11 @@ someone can turn it on.
   IOS-XE image; no custom SNMP view is needed.
 * Nothing on the switch itself. The plug-in only reads.
 
-Discovery is automatic on any host whose `sysDescr` contains `IOSXE`. A Catalyst
-8000 router reports `X86_64_LINUX_IOSD-UNIVERSALK9-M` with no `IOSXE` token, so
-routers are left alone.
+Discovery is automatic on any host whose `sysDescr` contains `IOSXE`, which on
+the tested hardware means a Catalyst 9000 reporting `CAT9K_IOSXE`. Two families
+carry no such token and are therefore left alone: a Catalyst 8000 router
+(`X86_64_LINUX_IOSD-UNIVERSALK9-M`) and an older 3650/3850
+(`CAT3K_CAA-UNIVERSALK9-M`). See [Scope](#scope).
 
 ## Installation
 
@@ -174,14 +176,21 @@ details**. Inflated capacity carrying a warning beats a confident zero.
 
 ## Scope
 
-Built and verified against **stackable Catalyst, 9200/9300 class**, where slot 0
-is the front panel and slot 1 is the uplink module.
+**Tested on Catalyst 9000 only** — stackable 9200/9300 class, where slot 0 is
+the front panel and slot 1 is the uplink module. Nothing else has been run
+against real data.
 
 On a **modular chassis such as a 9400** the middle field is a line-card slot, so
 the access/uplink reading does not hold and the pools would be labelled
 misleadingly. The plug-in will discover services there because the `sysDescr`
 matches; do not trust them without looking at the data first. Open an issue with
 a walk and it can be handled properly.
+
+**Older Catalyst switches are not covered and are not discovered.** A 3650/3850
+runs IOS-XE too, but its image reports itself as
+`CAT3K_CAA-UNIVERSALK9-M` with no `IOSXE` token, so the detection never matches.
+That is deliberate: how those platforms fill the ENTITY-MIB has not been
+checked, and a pool sized from unverified data is worse than no service.
 
 ## Reporting a problem
 
@@ -230,8 +239,15 @@ uplink module with **no optics fitted** still reports four positions, the other
 pins what the interface table alone would have counted, so a regression shows up
 as a number rather than as a silently smaller pool.
 
-There are 15 tests. To release, build the `.mkp` on a site with `mkp package`,
-tag `v<version>`, and attach the package to the GitHub release.
+There are 15 tests. To build the package locally:
+
+```
+python3 scripts/build_mkp.py          # writes dist/iosxe_capacity-<version>.mkp
+```
+
+To release, set the version in `package.manifest` and push a matching tag.
+GitHub Actions runs the tests, checks that the tag agrees with the manifest and
+attaches the built `.mkp` to the release.
 
 ## Compatibility notes
 
