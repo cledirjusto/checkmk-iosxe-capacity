@@ -1,0 +1,18 @@
+{
+    "author": "Cledir Justo",
+    "description": "Physical port capacity for Cisco Catalyst switches running IOS-XE, over SNMP. One service per port pool, where a pool is one cage type on one stack member, in the built-in front panel or an uplink module. Positions that IOS-XE advertises for uplink modules that are not installed are excluded using the ENTITY-MIB.",
+    "download_url": "https://github.com/cledirjusto/checkmk-iosxe-capacity",
+    "files": {
+        "cmk_addons_plugins": [
+            "iosxe_capacity/agent_based/iosxe_port_capacity.py",
+            "iosxe_capacity/graphing/iosxe_port_capacity.py",
+            "iosxe_capacity/rulesets/iosxe_port_capacity.py"
+        ]
+    },
+    "name": "iosxe_capacity",
+    "title": "Cisco IOS-XE port capacity",
+    "version": "1.1.0",
+    "version.min_required": "2.3.0",
+    "version.packaged": "checkmk-iosxe-capacity build_mkp.py",
+    "version.usable_until": null
+}

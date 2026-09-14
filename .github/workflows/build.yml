@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install development dependencies
+        run: pip install pytest
+
+      - name: Test
+        run: pytest -q
+
+      - name: Build the package
+        run: python3 scripts/build_mkp.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mkp
+          path: dist/*.mkp
+
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check that the tag matches the package version
+        run: |
+          version="$(python3 -c 'import json;print(json.load(open("package.manifest"))["version"])')"
+          if [ "refs/tags/v${version}" != "${GITHUB_REF}" ]; then
+            echo "tag ${GITHUB_REF} does not match package version ${version}" >&2
+            exit 1
+          fi
+
+      - name: Build the package
+        run: python3 scripts/build_mkp.py
+
+      - name: Attach the .mkp to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.mkp
+          generate_release_notes: true
