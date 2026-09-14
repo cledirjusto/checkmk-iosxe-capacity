@@ -61,10 +61,8 @@ someone can turn it on.
 * Nothing on the switch itself. The plug-in only reads.
 
 Discovery is automatic on any host whose `sysDescr` contains `IOSXE`, which on
-the tested hardware means a Catalyst 9000 reporting `CAT9K_IOSXE`. Two families
-carry no such token and are therefore left alone: a Catalyst 8000 router
-(`X86_64_LINUX_IOSD-UNIVERSALK9-M`) and an older 3650/3850
-(`CAT3K_CAA-UNIVERSALK9-M`). See [Scope](#scope).
+the supported hardware means a Catalyst 9000 reporting `CAT9K_IOSXE`. A device
+that reports no such token is left alone. See [Scope](#scope).
 
 ## Installation
 
@@ -185,12 +183,6 @@ the access/uplink reading does not hold and the pools would be labelled
 misleadingly. The plug-in will discover services there because the `sysDescr`
 matches; do not trust them without looking at the data first. Open an issue with
 a walk and it can be handled properly.
-
-**Older Catalyst switches are not covered and are not discovered.** A 3650/3850
-runs IOS-XE too, but its image reports itself as
-`CAT3K_CAA-UNIVERSALK9-M` with no `IOSXE` token, so the detection never matches.
-That is deliberate: how those platforms fill the ENTITY-MIB has not been
-checked, and a pool sized from unverified data is worse than no service.
 
 ## Reporting a problem
 
