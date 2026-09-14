@@ -26,12 +26,12 @@ One service per **port pool**. A pool is one cage type, on one stack member, in
 either the built-in front panel or an uplink module:
 
 ```
-Port capacity 1 Gi access    48 ports, 13 in use, 35 free, Capacity used: 27.1%
-Port capacity 1 Te uplink     4 ports,  1 in use,  3 free, Capacity used: 25.0%
-Port capacity 2 Gi access    48 ports, 21 in use, 27 free, Capacity used: 43.8%
-Port capacity 3 Gi access    36 ports, 23 in use, 13 free, Capacity used: 63.9%
-Port capacity 3 Te access    12 ports, 12 in use,  0 free, Capacity used: 100.0%
-Port capacity 3 Te uplink     4 ports,  1 in use,  3 free, Capacity used: 25.0%
+Port capacity Switch 1 Gi access    48 ports, 13 in use, 35 free, Capacity used: 27.1%
+Port capacity Switch 1 Te uplink     4 ports,  1 in use,  3 free, Capacity used: 25.0%
+Port capacity Switch 2 Gi access    48 ports, 21 in use, 27 free, Capacity used: 43.8%
+Port capacity Switch 3 Gi access    36 ports, 23 in use, 13 free, Capacity used: 63.9%
+Port capacity Switch 3 Te access    12 ports, 12 in use,  0 free, Capacity used: 100.0%
+Port capacity Switch 3 Te uplink     4 ports,  1 in use,  3 free, Capacity used: 25.0%
 ```
 
 The item is `<member> <cage type> <access|uplink>`. Each service carries four
@@ -71,8 +71,8 @@ routers are left alone.
 2. Install it on the central site:
 
    ```
-   OMD[mysite]:~$ mkp add iosxe_capacity-1.0.0.mkp
-   OMD[mysite]:~$ mkp enable iosxe_capacity 1.0.0
+   OMD[mysite]:~$ mkp add iosxe_capacity-1.1.0.mkp
+   OMD[mysite]:~$ mkp enable iosxe_capacity 1.1.0
    ```
 
    or use *Setup → Maintenance → Extension packages* in the commercial

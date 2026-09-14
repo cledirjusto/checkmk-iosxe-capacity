@@ -303,7 +303,8 @@ def check_iosxe_port_capacity(
 
 check_plugin_iosxe_port_capacity = CheckPlugin(
     name="iosxe_port_capacity",
-    service_name="Port capacity %s",
+    # "Switch" spells out what the leading number is: the stack member.
+    service_name="Port capacity Switch %s",
     discovery_function=discover_iosxe_port_capacity,
     check_function=check_iosxe_port_capacity,
     check_ruleset_name="iosxe_port_capacity",
